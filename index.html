@@ -3,38 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bioadata Qu</title>
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single+Ink:wght@100..900&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <style>
-        body{
-            font-family: "Bitcount Prop Single Ink";
-            background-color: rgba(43, 226, 46, 0.493);
-            
-        }
-        h1{
-            color: blue;
-            text-align: center;
-        }
-        p{
-            color: rgb(239, 140, 19);
-        }
-        .hobi{
-            color: rgb(6, 104, 209);
-        }
-    </style>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <!-- icon -->
+    <link rel="icon" type="image/jpg" href="images/omanne (2).png">
+    <link rel="stylesheet" href="styles.css">
+    <title>Ikan Hias Laut</title>
 </head>
 <body>
-    <h1>Tentang Saya</h1>
-    <p>Halo! Nama saya Oman, seorang Mahasiswa</p>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html"><img src="images/omanne (2).png" alt="Logo"></a> 
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-    <h2> Hobi Saya:</h2>
-    <ul>
-        <li class="hobi">Membaca Webtoon</li>
-        <li class="hobi">Bermain Game</li>
-        <li class="hobi">Jalan-Jalan</li>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- NAVBAR END -->
 
-    </ul>
+    
+    <!-- KOLOM BERWARNA -->
+    <div class="container text-center mb-3 mt-3">
+        <div class="row x">
+            <div class="col-6 bg-primary text-white p-3">
+                    Kolom 1 (6 dari 12)
+            </div>
+
+            <div class="col-6 bg-success text-white p-3">
+                    Kolom 2 (6 dari 12)
+            </div>
+        </div>
+
+        <div class="row x">
+            <div class="col-md-4 col-12 bg-info p-3">Kolom A</div>
+            <div class="col-md-4 col-12 bg-warning p-3">Kolom B</div>
+            <div class="col-md-4 col-12 bg-danger p-3">Kolom C</div>
+        </div>
+
+        <!-- MACAM-MACAM BUTTON -->
+        <div class="row">
+            <div class="col-12 mt-3">
+                <button type="button" class="btn btn-primary">Primary</button>
+                <button type="button" class="btn btn-secondary">Secondary</button>
+                <button type="button" class="btn btn-success">Success</button>
+                <button type="button" class="btn btn-danger">Danger</button>
+                <button type="button" class="btn btn-info">Info</button>
+                <button type="button" class="btn btn-primary btn-lg m-1">Large</button>
+                <button type="button" class="btn btn-secondary btn-sm">Small</button>
+            </div>
+        </div>   
+    </div>
+
+    <!-- BAGIAN CARD -->
+    <div class="container text-center">
+        <div class="row">
+            <!-- CARD 1 -->
+            <div class="col-3">
+                <div class="card">
+                    <img src="images/ikan1.jpg" class="card-img-top" alt="gambar ikan">
+                    <div class="card-body">
+                        <h5 class="card-title">Ikan Buntal</h5>
+                        <p class="card-text">Yang dikenal sebagai
+pufferfish atau fugu di Jepang, adalah jenis ikan yang terkenal karena kemampuannya menggembungkan diri dan racun mematikannya. Meskipun beracun, ikan ini juga merupakan hidangan mewah dan lezat di beberapa negara, tetapi harus diolah oleh koki yang sangat terlatih dan bersertifikasi.</p>
+                        <a href="#" class="btn btn-primary">Lihat Detail</a>
+                    </div>
+                </div>
+            </div>
+            <!-- CARD 2 -->
+            <div class="col-3">
+                <div class="card">
+                    <img src="images/ikan2.jpg" class="card-img-top" alt="gambar ikan">
+                    <div class="card-body">
+                        <h5 class="card-title">Ikan Diskus</h5>
+                        <p class="card-text">Ikan discus (
+Symphysodon spp.) adalah ikan hias air tawar yang berasal dari pedalaman Sungai Amazon, Brasil. Ikan ini dikenal dengan bentuk tubuhnya yang bulat pipih seperti cakram dan warna-warninya yang cantik, sehingga mendapat julukan "Raja Akuarium". Discus termasuk dalam famili Cichlidae dan merupakan ikan yang tenang serta suka hidup berkelompok</p>
+                            <a href="#" class="btn btn-primary">Lihat Detail</a>
+                    </div>
+                </div>
+            </div>
+            <!-- CARD 3 -->
+            <div class="col-3">
+                <div class="card">
+                    <a href="#"><img src="images/ikan3.jpg" class="card-img-top" alt="gambar ikan"></a>
+                    <div class="card-body">
+                        <h5 class="card-title">Ikan Botia</h5>
+                        <p class="card-text">Ikan botia (
+Chromobotia macracanthus) adalah spesies ikan air tawar tropis yang berasal dari Indonesia, terutama dari perairan di pulau Sumatra dan Kalimantan. Dikenal juga dengan nama botia badut atau clown loach karena corak tubuhnya yang berwarna-warni menyerupai pakaian badut. Ikan ini sangat populer sebagai ikan hias akuarium di seluruh dunia</p>
+                        <a href="#" class="btn btn-primary">Lihat Detail</a>
+                    </div>
+                </div>
+            </div>
+            <!-- CARD 4 -->
+            <div class="col-3">
+                <div class="card">
+                    <img src="images/ikan4.jpg" class="card-img-top" alt="gambar ikan">
+                    <div class="card-body">
+                        <h5 class="card-title">Ikan Oskar</h5>
+                        <p class="card-text">Ikan oscar (\(Astronotusocellatus\)) adalah spesies ikan siklid predator yang berasal dari Amerika Selatan dan populer sebagai ikan akuarium. Ikan ini dikenal cerdas, memiliki beragam corak yang indah, dan cenderung agresif, terutama terhadap ikan kecil</p>
+                        <a href="#" class="btn btn-primary">Lihat Detail</a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- ROW CARD END -->
+    </div> <!-- CONTAINER CARD END -->
+
+    
+    
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
