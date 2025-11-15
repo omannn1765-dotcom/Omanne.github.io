@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        .kalkulator {
+            width: 300px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="kalkulator">
+        <input type="text" id="hasil" class="form-control" disabled>
+        <div class="row mt-3">
+            <div class="col-3">
+                <button class="btn btn-secondary" data-nilai="7">7</button>
+            </div>
+            <div class="col-3">
+                <button class="btn btn-secondary" data-nilai="8">8</button>
+            </div>
+            <div class="col-3">
+                <button class="btn btn-secondary" data-nilai="9">9</button>
+            </div>
+            <div class="col-3">
+                <button class="btn btn-primary" data-nilai="/">/</button>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-3">
+                <button class="btn btn-secondary" data-nilai="4">4</button>
+            </div>
+            <div class="col-3">
+                <button class="btn btn-secondary" data-nilai="5">5</button>
+            </div>
+            <div class="col-3">
+                <button class="btn btn-secondary" data-nilai="6">6</button>
+            </div>
+            <div class="col-3">
+                <button class="btn btn-primary" data-nilai="*">*</button>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-3">
+                <button class="btn btn-secondary" data-nilai="1">1</button>
+            </div>
+            <div class="col-3">
+                <button class="btn btn-secondary" data-nilai="2">2</button>
+            </div>
+            <div class="col-3">
+                <button class="btn btn-secondary" data-nilai="3">3</button>
+            </div>
+            <div class="col-3">
+                <button class="btn btn-primary" data-nilai="-">-</button>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-3">
+                <button class="btn btn-secondary" data-nilai="0">0</button>
+            </div>
+            <div class="col-3">
+                <button class="btn btn-secondary" data-nilai=".">.</button>
+            </div>
+            <div class="col-3">
+                <button class="btn btn-success" id="hitung">=</button>
+            </div>
+            <div class="col-3">
+                <button class="btn btn-primary" data-nilai="+">+</button>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12">
+                <button class="btn btn-danger" id="reset">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var hasil = $('#hasil');
+
+            // Tambahkan nilai ke input field
+            $('button[data-nilai]').click(function() {
+                var nilai = $(this).data('nilai');
+                hasil.val(hasil.val() + nilai);
+            });
+
+            // Hitung hasil
+            $('#hitung').click(function() {
+                try {
+                    var result = eval(hasil.val());
+                    hasil.val(result);
+                } catch (e) {
+                    hasil.val('Error');
+                }
+            });
+
+            // Reset input field
+            $('#reset').click(function() {
+                hasil.val('');
+            });
+        });
+    </script>
+</body>
+</html>

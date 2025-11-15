@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kalkulator</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background-color: #da601e; }
+    .calc-card { max-width: 360px; margin: 40px auto; }
+    .display { height: 72px; font-size: 28px; text-align: right; padding: 12px; }
+    .btn-operator { font-weight: 600; }
+    .btn-wide { min-width: 100%; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card calc-card shadow-sm">
+      <div class="card-body p-3">
+        <h5 class="card-title text-center mb-3">Omanne</h5>
+
+        <div class="mb-2">
+          <input id="display" class="form-control display" type="text" aria-label="Display" readonly value="0">
+        </div>
+
+        <div class="row g-2">
+          <div class="col-3"><button class="btn btn-danger btn-sm btn-block w-100" id="clear">C</button></div>
+          <div class="col-3"><button class="btn btn-secondary btn-sm btn-block w-100" id="back">⌫</button></div>
+          <div class="col-3"><button class="btn btn-secondary btn-sm btn-block w-100" data-value="%">%</button></div>
+          <div class="col-3"><button class="btn btn-warning btn-sm btn-block w-100 btn-operator" data-value="/">÷</button></div>
+
+          <div class="col-3"><button class="btn btn-light btn-sm btn-block w-100" data-value="7">7</button></div>
+          <div class="col-3"><button class="btn btn-light btn-sm btn-block w-100" data-value="8">8</button></div>
+          <div class="col-3"><button class="btn btn-light btn-sm btn-block w-100" data-value="9">9</button></div>
+          <div class="col-3"><button class="btn btn-warning btn-sm btn-block w-100 btn-operator" data-value="*">×</button></div>
+
+          <div class="col-3"><button class="btn btn-light btn-sm btn-block w-100" data-value="4">4</button></div>
+          <div class="col-3"><button class="btn btn-light btn-sm btn-block w-100" data-value="5">5</button></div>
+          <div class="col-3"><button class="btn btn-light btn-sm btn-block w-100" data-value="6">6</button></div>
+          <div class="col-3"><button class="btn btn-warning btn-sm btn-block w-100 btn-operator" data-value="-">−</button></div>
+
+          <div class="col-3"><button class="btn btn-light btn-sm btn-block w-100" data-value="1">1</button></div>
+          <div class="col-3"><button class="btn btn-light btn-sm btn-block w-100" data-value="2">2</button></div>
+          <div class="col-3"><button class="btn btn-light btn-sm btn-block w-100" data-value="3">3</button></div>
+          <div class="col-3"><button class="btn btn-warning btn-sm btn-block w-100 btn-operator" data-value="+">+</button></div>
+
+          <div class="col-6"><button class="btn btn-light btn-sm btn-block w-100" data-value="0">0</button></div>
+          <div class="col-3"><button class="btn btn-light btn-sm btn-block w-100" data-value=".">.</button></div>
+          <div class="col-3"><button class="btn btn-success btn-sm btn-block w-100" id="equals">=</button></div>
+        </div>
+
+        <div class="mt-3 small text-muted text-center">make to Omanne</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- jQuery + Bootstrap JS -->
+  <script src="jquery.min.js"></script>
+  <script src="bootstrap/js/bootstrap.min.js"></script>
+
+  <script>
+    $(function() {
+      var $display = $('#display');
+
+      function setDisplay(val) {
+        $display.val(val);
+      }
+
+      function getDisplay() {
+        return $display.val();
+      }
+
+      function resetIfZero() {
+        if (getDisplay() === '0') setDisplay('');
+      }
+
+      // Append button value (digits, dot, operators)
+      $('[data-value]').on('click', function() {
+        var v = $(this).data('value').toString();
+        var cur = getDisplay();
+
+        // Prevent two operators in a row (except minus for negative numbers)
+        var operators = ['+', '-', '*', '/', '%'];
+        var last = cur.slice(-1);
+
+        if (operators.indexOf(v) >= 0) {
+          if (cur === '' && v !== '-') return; // can't start with + * / %
+          if (operators.indexOf(last) >= 0) {
+            // replace last operator with new one
+            cur = cur.slice(0, -1);
+          }
+          setDisplay(cur + v);
+          return;
+        }
+
+        if (v === '.') {
+          // prevent multiple dots in current number segment
+          var parts = cur.split(/[^0-9.]/);
+          var lastNum = parts[parts.length - 1] || '';
+          if (lastNum.indexOf('.') !== -1) return;
+          if (last === '' || operators.indexOf(last) >= 0) v = '0.'; // start decimal with 0.
+        }
+
+        if (cur === '0') cur = '';
+        setDisplay(cur + v);
+      });
+
+      // Clear
+      $('#clear').on('click', function() {
+        setDisplay('0');
+      });
+
+      // Backspace
+      $('#back').on('click', function() {
+        var cur = getDisplay();
+        if (cur.length <= 1) {
+          setDisplay('0');
+        } else {
+          setDisplay(cur.slice(0, -1));
+        }
+      });
+
+      // Equals / evaluate
+      $('#equals').on('click', calculate);
+
+      function safeEval(expr) {
+        // Replace visual operators with JS equivalents (× ÷ may have been used)
+        expr = expr.replace(/×/g, '*').replace(/÷/g, '/');
+        // Handle percentage: convert 'number%'' to '(number/100)'
+        // We'll replace occurrences like 50% => (50/100)
+        expr = expr.replace(/(\d+(?:\.\d+)?)%/g, '($1/100)');
+
+        // Disallow any characters except numbers, operators, parentheses and dot
+        if (/[^0-9+\-*/().%\s]/.test(expr)) throw 'Invalid characters';
+
+        // Use Function constructor for safer eval context
+        try {
+          // eslint-disable-next-line no-new-func
+          var res = Function('"use strict"; return (' + expr + ')')();
+          if (res === Infinity || res === -Infinity || Number.isNaN(res)) throw 'Math error';
+          return res;
+        } catch (e) {
+          throw 'Invalid expression';
+        }
+      }
+
+      function calculate() {
+        var expr = getDisplay();
+        try {
+          var result = safeEval(expr);
+          // Format result: remove trailing .0 if integer
+          if (Number.isFinite(result)) {
+            if (Number.isInteger(result)) setDisplay(String(result));
+            else setDisplay(String(Number(result.toFixed(10))).replace(/\.?0+$/, ''));
+          } else {
+            setDisplay('Error');
+          }
+        } catch (e) {
+          setDisplay('Error');
+          setTimeout(function() { setDisplay('0'); }, 900);
+        }
+      }
+
+      // Keyboard support
+      $(document).on('keydown', function(e) {
+        var key = e.key;
+        if ((/^[0-9]$/).test(key)) {
+          $('[data-value="' + key + '"]').click();
+          e.preventDefault();
+        } else if (key === '.' ) {
+          $('[data-value="."]').click();
+          e.preventDefault();
+        } else if (key === 'Enter' || key === '=') {
+          $('#equals').click();
+          e.preventDefault();
+        } else if (key === 'Backspace') {
+          $('#back').click();
+          e.preventDefault();
+        } else if (key === 'Escape') {
+          $('#clear').click();
+          e.preventDefault();
+        } else if (['+', '-', '*', '/', '%'].indexOf(key) >= 0) {
+          $('[data-value="' + key + '"]').click();
+          e.preventDefault();
+        }
+      });
+
+      // Initialize
+      setDisplay('0');
+    });
+  </script>
+</body>
+</html>
